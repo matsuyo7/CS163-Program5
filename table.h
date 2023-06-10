@@ -20,7 +20,7 @@ struct vertex
 
 struct node
 {
-	vector<vertex> adjacent;
+	vertex * adjacent;
 	node * next;
 };
 
@@ -30,7 +30,7 @@ class graph
 		graph(int size = 100);	//constructor
 		~graph();	//destructor
 		int insert_vertex(const string & to_add);	//create a vertex and insert a task, return success/failure
-		int insert_edge(const string & current, const string & attach);	//attach the two vertices if found in the list, return success/failure
+		int insert_edge(const string & current_vertex, const string & to_attach);	//attach the two vertices if found in the list, return success/failure
 		int find(const string & to_find);	//find the task in the list. return success if found and return failure otherwise
 		int display(const string & to_display);	//display the adjacency list, return success/failure
 	private:

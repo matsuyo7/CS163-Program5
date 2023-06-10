@@ -10,11 +10,11 @@
 //constructor
 graph::graph(int size)
 {
-	for (int i = 0; i < size; ++i)
+/*	for (int i = 0; i < size; ++i)
 	{
 		adjacency_list[i].head = nullptr;
 	}
-	list_size = size;
+	list_size = size;*/
 }
 //destructor
 graph::~graph()
@@ -35,11 +35,35 @@ int graph::insert_vertex(const string & to_add)
 	return found;
 }
 //attach the two vertices if found in the list, return success/failure
-int graph::insert_edge(const string & current, const string & attach)
-{}
+int graph::insert_edge(const string & current_vertex, const string & to_attach)
+{
+	int current = 0;
+	int attach = 0;
+	node * hold = nullptr;
+	current = find(current_vertex);
+	attach = find(to_attach);
+	if (current == -1 || attach == -1)
+		return 0;
+	hold = adjacency_list[current].head;
+	adjacency_list[current].head = new node;
+	adjacency_list[current].head->adjacent = & adjacency_list[attach];
+	adjacency_list[current].head->next = hold;
+	return 1;
+}
 //find the task in the list. return success if found and return failure otherwise
 int graph::find(const string & to_find)
-{}
+{
+	int match = -1;
+	for (int i = 0; i < list_size; ++i)
+	{
+		if (adjacency_list[i].task == to_find)
+		{
+			match = i;
+			i = list_size;
+		}
+	}
+	return match;
+}
 //display the adjacency list, return success/failure
 int graph::display(const string & to_display)
 {}
