@@ -10,6 +10,8 @@
 //Prototypes
 int menu();
 void add_task(string & to_add, graph & a_task);
+void add_connect(string & current, string & to_attach, graph & a_task);
+void display_connect(string & connect, graph & a_task);
 
 int main()
 {
@@ -17,6 +19,9 @@ int main()
 	graph a_task;
 	int option {0};
 	string to_add;
+	string current;
+	string to_attach;
+	string connect;
 
 	do
 	{
@@ -26,9 +31,13 @@ int main()
 			add_task(to_add, a_task);
 		}
 		if (option == 2)
-		{}
+		{
+			add_connect(current, to_attach, a_task);
+		}
 		if (option == 3)
-		{}
+		{
+			display_connect(connect, a_task);
+		}
 	} while (option != 4);
 
 	return 0;
@@ -57,8 +66,25 @@ int menu()
 void add_task(string & to_add, graph & a_task)
 {
 	cout << "\nTask to insert: ";
-	cin.ignore();
 	getline(cin, to_add);
 	if (!a_task.insert_vertex(to_add))
 		cout << "\nUnable to insert" << endl;
+}
+//Insert a connection from one task to another
+void add_connect(string & current, string & to_attach, graph & a_task)
+{
+	cout << "\nWhat's the starting task: ";
+	getline(cin, current);
+	cout << "\nWhat's the next task to connect: ";
+	getline(cin, to_attach);
+	if (!a_task.insert_edge(current, to_attach))
+		cout << "\nUnable to connect" << endl;
+}
+//Display the adjacency list
+void display_connect(string & connect, graph & a_task)
+{
+	cout << "\nWhat tasks and its connected task to display: ";
+	getline(cin, connect);
+	if (!a_task.display(connect))
+		cout << "\nCouldn't display" << endl;
 }

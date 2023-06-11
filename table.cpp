@@ -10,27 +10,44 @@
 //constructor
 graph::graph(int size)
 {
-/*	for (int i = 0; i < size; ++i)
+	adjacency_list.resize(size);
+	for (int i = 0; i < size; ++i)
 	{
 		adjacency_list[i].head = nullptr;
 	}
-	list_size = size;*/
+	list_size = size;
 }
 //destructor
 graph::~graph()
-{}
+{
+	node * current = nullptr;
+	node * previous = nullptr;
+	for (int i = 0; i < list_size; ++i)
+	{
+		current = adjacency_list[i].head;
+		while (current)
+		{
+			previous = current;
+			current = current->next;
+			delete previous;
+		}
+		adjacency_list[i].head = nullptr;
+	}
+}
 //create a vertex and insert a task, return success/failure
 int graph::insert_vertex(const string & to_add)
 {
 	bool found = false;
-	for (int i = 0; i < list_size; ++i)
+	int i = 0;
+	while (i < list_size && !found)
 	{
 		if (adjacency_list[i].task.empty())
 		{
 			adjacency_list[i].task = to_add;
-			i = list_size;
+			//cout << "\nTask: " << adjacency_list[i].task;
 			found = true;
 		}
+		++i;
 	}
 	return found;
 }
@@ -66,4 +83,15 @@ int graph::find(const string & to_find)
 }
 //display the adjacency list, return success/failure
 int graph::display(const string & to_display)
-{}
+{
+	int current = find(to_display);
+	if (current == -1 || !adjacency_list[current].head)
+		return 0;
+	node * temp = adjacency_list[current].head;
+	while (temp)
+	{
+		cout << "\nTask: " << temp->adjacent->task;
+		temp = temp->next;
+	}
+	return 1;
+}
